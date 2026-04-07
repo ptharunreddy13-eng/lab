@@ -1,0 +1,61 @@
+#include<stdio.h>
+
+int queue[50];
+int front = -1, rear = -1;
+
+void enqueue(int val){
+    if(rear == 49)
+        printf("Queue Full\n");
+    else{
+        if(front == -1) front = 0;
+        rear++;
+        queue[rear] = val;
+    }
+}
+
+void dequeue(){
+    if(front == -1 || front > rear)
+        printf("Queue Empty\n");
+    else{
+        printf("Deleted: %d\n", queue[front]);
+        front++;
+    }
+}
+
+void peek(){
+    if(front == -1 || front > rear)
+        printf("Queue Empty\n");
+    else
+        printf("Front element: %d\n", queue[front]);
+}
+
+void display(){
+    if(front == -1 || front > rear)
+        printf("Queue Empty\n");
+    else{
+        for(int i = front; i <= rear; i++)
+            printf("%d ", queue[i]);
+        printf("\n");
+    }
+}
+
+int main(){
+    int ch, val;
+
+    while(1){
+        printf("\n1.Enqueue 2.Dequeue 3.Peek 4.Display 5.Exit\n");
+        scanf("%d",&ch);
+
+        switch(ch){
+            case 1:
+                printf("Enter value: ");
+                scanf("%d",&val);
+                enqueue(val);
+                break;
+            case 2: dequeue(); break;
+            case 3: peek(); break;
+            case 4: display(); break;
+            case 5: return 0;
+        }
+    }
+}

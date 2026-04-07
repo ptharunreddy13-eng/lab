@@ -1,0 +1,47 @@
+#include<stdio.h>
+
+int stack[50];
+int top = -1;
+
+void push(int x){
+    stack[++top] = x;
+}
+
+int pop(){
+    return stack[top--];
+}
+
+int main(){
+    char exp[50];
+    int i = 0;
+
+    printf("Enter postfix: ");
+    scanf("%s", exp);
+
+    while(exp[i] != '\0'){
+        char c = exp[i];
+
+        if(c >= '0' && c <= '9'){
+            push(c - '0');
+        }
+        else{
+            int b = pop();
+            int a = pop();
+
+            if(c == '+'){
+                push(a + b);
+            }
+            else if(c == '-'){
+                push(a - b);
+            }
+            else if(c == '*'){
+                push(a * b);
+            }
+            else if(c == '/'){
+                push(a / b);
+            }
+        }
+        i++;
+    }
+    printf("Result = %d", pop());
+}

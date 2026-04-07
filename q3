@@ -1,0 +1,53 @@
+#include<stdio.h>
+
+char stack[50];
+int top = -1;
+
+void push(char c){
+    top++;
+    stack[top] = c;
+}
+
+char pop(){
+    return stack[top-1];
+}
+
+int precedence(char c){
+    if(c == '+' || c == '-'){
+        return 1;
+    }
+    if(c == '*' || c == '/'){
+        return 2;
+    }
+    return 0;
+}
+
+int main(){
+    char infix[50], postfix[50];
+    int i = 0, k = 0;
+
+    printf("Enter infix: ");
+    scanf("%s", infix);
+
+    while(infix[i] != '\0'){
+        char c = infix[i];
+
+        if((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')){
+            postfix[k++] = c;
+        }
+        else{
+            while(top != -1 && precedence(stack[top]) >= precedence(c)){
+                postfix[k++] = pop();
+            }
+            push(c);
+        }
+        i++;
+    }
+
+    while(top != -1){
+        postfix[k++] = pop();
+    }
+    postfix[k] = '\0';
+
+    printf("Postfix: %s", postfix);
+}

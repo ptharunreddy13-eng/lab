@@ -1,0 +1,54 @@
+#include<stdio.h>
+
+char stack[50];
+int top = -1;
+
+void push(char c){
+    stack[++top] = c;
+}
+
+char pop(){
+    return stack[top-1];
+}
+
+int main(){
+    char exp[50];
+    int i = 0, valid = 1;
+
+    printf("Enter expression: ");
+    scanf("%s", exp);
+
+    while(exp[i] != '\0'){
+        char c = exp[i];
+
+        if(c == '(' || c == '{' || c == '['){
+            push(c);
+        }
+        else if(c == ')' || c == '}' || c == ']'){
+            if(top == -1){
+                valid = 0;
+                break;
+            }
+            char t = pop();
+
+            if((c == ')' && t != '(') ||
+               (c == '}' && t != '{') ||
+               (c == ']' && t != '[')){
+                valid = 0;
+                break;
+            }
+        }
+        i++;
+    }
+
+    if(top != -1){
+        valid = 0;
+    }
+
+    if(valid){
+        printf("Valid Expression");
+    }
+    else{
+        printf("Invalid Expression");
+    }
+}
